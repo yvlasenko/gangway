@@ -342,6 +342,11 @@ func generateInfo(w http.ResponseWriter, r *http.Request) *userInfo {
 
 	claims := jwtToken.Claims.(jwt.MapClaims)
 	username, ok := claims[cfg.UsernameClaim].(string)
+
+	log.WithFields(log.Fields{
+		"claims": claims,
+	}).Info("Claims debug")
+
 	if !ok {
 		http.Error(w, "Could not parse Username claim", http.StatusInternalServerError)
 		return nil
